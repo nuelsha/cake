@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Global base styles to better match the mock */
+:root {
+	color-scheme: light;
+}
+
+html, body, #root {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: #fcf2e6;
+	font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Small hover micro-interaction used by Button */
+.btn-hover-style { transition: transform .15s ease, opacity .15s ease; }
+.btn-hover-style:hover { transform: translateY(-1px); }
+.btn-hover-style:active { transform: translateY(0); }
+
+/* Custom utility aliases to match design tokens (Tailwind v4 friendly) */
+@layer utilities {
+	.bg-lightbrown { background-color: #fcf2e6; }
+	.text-yambrownfont { color: #5b3a1f; }
+	.bg-yambrownbutton { background-color: #624125; }
+	.text-yambrownbuttontext { color: #ffffff; }
+	.ring-yambrownbutton { --tw-ring-color: #624125; }
+	.border-yambrownfont\/40 { border-color: color-mix(in oklab, #5b3a1f 40%, transparent); }
+}
