@@ -2,7 +2,7 @@ import {  useGLTF } from '@react-three/drei';
 import { useEffect } from 'react';
 import * as THREE from 'three'
 const TopDecoration = ({color='#fff',isVisible}) => {
-    const { scene } = useGLTF('/src/assets/3d/TopDecoration.glb')
+     const { scene } = useGLTF(new URL('../assets/3d/TopDecoration.glb', import.meta.url).href)
          useEffect(() => {
                 scene.traverse((child) => {
                 console.log(child)

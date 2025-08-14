@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import * as THREE from 'three'
 import { useGLTF } from '@react-three/drei'
 const Cot = ({color='#fff'}) => {
-    const { scene } = useGLTF('/src/assets/3d/cot.glb')
+  const { scene } = useGLTF(new URL('../assets/3d/cot.glb', import.meta.url).href)
      useEffect(() => {
          scene.traverse((child) => {
             if (child.isMesh) {

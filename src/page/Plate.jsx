@@ -2,7 +2,7 @@ import {  Environment, useGLTF } from '@react-three/drei';
 import { useEffect } from 'react';
 import * as THREE from 'three'
 const Plate = ({color='#fff'}) => {
-    const { scene } = useGLTF('/src/assets/3d/plate.glb')
+  const { scene } = useGLTF(new URL('../assets/3d/plate.glb', import.meta.url).href)
          useEffect(() => {
                 scene.traverse((child) => {
                 console.log(child)

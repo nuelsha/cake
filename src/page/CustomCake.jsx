@@ -72,7 +72,7 @@ const CustomCake = () => {
 
       <div className="flex flex-col lg:flex-row gap-6 p-6 flex-grow">
         <div className="w-full lg:w-1/2 h-[40vh] sm:h-[50vh] lg:h-[calc(100vh-140px)] rounded-2xl overflow-hidden bg-lightbrown">
-          <Canvas className="w-full h-full flex items-center">
+            <Canvas className="w-full h-full flex items-center" dpr={[1, 2]} gl={{ antialias: true, powerPreference: 'high-performance' }}>
             <pointLight position={[0, 5, 0]} intensity={50} />
             <spotLight position={[0, 5, 0]} angle={0.3} penumbra={0.4} />
             <Environment preset="city" background={false} />
