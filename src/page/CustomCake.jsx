@@ -10,7 +10,7 @@ import TopDecoration from './TopDecoration';
 import BottomDecoration from './BottomDecoration';
 
 import CustomCakeMenu from './CustomCakeMenu';
-
+ 
 const CustomCake = () => {
   const [fillingColor, setFillingColor] = useState('#ffffff');
   const [cotColor, setCotColor] = useState('#ffffff');
