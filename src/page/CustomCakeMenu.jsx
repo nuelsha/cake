@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Button from '../components/ui/Button'
+import Button from '../components/ui/Button';
 
 const CustomCakeMenu = ({
   stepData,
@@ -9,16 +9,24 @@ const CustomCakeMenu = ({
   onSelectOption,
   onNext,
   onBack,
-  subtotal,  
+  subtotal,
 }) => {
 
-  
+  const handleCheckOut = () => {
+    const cakeData = window.cakeDataFromParent || {};
+    console.log("Sending Cake Data to Flutter:", cakeData);
+
+    // ✅ Send data to Flutter WebView
+    if (window.flutter_inappwebview) {
+      window.flutter_inappwebview.callHandler("onCakeDataSubmit", cakeData);
+    }
+  };
 
   return (
     <div className="w-full lg:w-1/2 p-6 md:p-8 rounded-2xl bg-lightbrown flex flex-col justify-between text-yambrownfont">
       <div className="flex justify-between items-center">
         <button
-          onClick={() => console.log('/')}
+          onClick={handleCheckOut}
           className="bg-yambrownbutton hover:bg-yambrownbutton/90 text-yambrownbuttontext px-5 py-2 rounded-lg font-medium cursor-pointer shadow-sm"
         >
           Check Out
@@ -29,8 +37,9 @@ const CustomCakeMenu = ({
         </div>
       </div>
 
-  <hr className="my-4 border-yambrownfont/40" />
-  <div className="flex-1 overflow-y-auto">
+      <hr className="my-4 border-yambrownfont/40" />
+
+      <div className="flex-1 overflow-y-auto">
         <div className="flex justify-between mb-4 font-semibold text-lg">
           <span>{stepData.title}</span>
           <span className="opacity-90">Review Your Option</span>

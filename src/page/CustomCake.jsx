@@ -1,17 +1,11 @@
-import { Canvas } from '@react-three/fiber';
-import { Environment, OrbitControls, OrthographicCamera } from '@react-three/drei';
-import { useState, useRef, useMemo } from 'react';
-
-import Filing from './Filling';
-import Cot from './Cot';
-import Plate from './Plate';
-import Base from './Base';
-import TopDecoration from './TopDecoration';
-import BottomDecoration from './BottomDecoration';
-
+import { useState, useRef, useMemo, useEffect } from 'react';
 import CustomCakeMenu from './CustomCakeMenu';
- 
+// ❌ We removed Three.js imports since you said you only want data for Flutter
+
 const CustomCake = () => {
+  // ----------------------------
+  // 1. States for cake parts
+  // ----------------------------
   const [fillingColor, setFillingColor] = useState('#ffffff');
   const [cotColor, setCotColor] = useState('#ffffff');
   const [baseColor, setBaseColor] = useState('#ffffff');
@@ -24,6 +18,9 @@ const CustomCake = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef();
 
+  // ----------------------------
+  // 2. Options
+  // ----------------------------
   const colorOptions = [
     { title: 'Pink', description: 'Soft & playful', value: '#FFB6C1', price: 100 },
     { title: 'Blue', description: 'Cool & bright', value: '#00B7EB', price: 120 },
@@ -45,6 +42,9 @@ const CustomCake = () => {
     { title: 'Bottom Decoration Color', type: 'color', setter: setBottomDecorationColor, selected: bottomDecorationColor, options: colorOptions },
   ];
 
+  // ----------------------------
+  // 3. Navigation
+  // ----------------------------
   const handleSelectOption = (stepIdx, opt) => {
     const step = steps[stepIdx];
     if (step.type === 'color') step.setter(opt.value);
@@ -54,15 +54,36 @@ const CustomCake = () => {
   const next = () => setActiveIndex((i) => (i + 1) % steps.length);
   const back = () => setActiveIndex((i) => (i - 1 + steps.length) % steps.length);
 
-  
+  // ----------------------------
+  // 4. Calculate subtotal
+  // ----------------------------
   const subtotal = useMemo(() => {
     return steps.reduce((total, step) => {
-      const selectedOption = step.options.find(opt => {
-        return step.type === 'color' ? opt.value === step.selected : opt.value === step.selected;
-      });
+      const selectedOption = step.options.find(opt =>
+        step.type === 'color' ? opt.value === step.selected : opt.value === step.selected
+      );
       return total + (selectedOption?.price || 0);
     }, 0);
   }, [steps]);
+
+  // ----------------------------
+  // 5. Prepare cake data to send to Flutter
+  // ----------------------------
+  const cakeData = {
+    fillingColor,
+    cotColor,
+    baseColor,
+    topDecorationColor,
+    bottomDecorationColor,
+    isTopVisible,
+    isBottomVisible,
+    subtotal
+  };
+
+  // Make it available globally for CustomCakeMenu
+  useEffect(() => {
+    window.cakeDataFromParent = cakeData;
+  }, [cakeData]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -71,27 +92,8 @@ const CustomCake = () => {
       </header>
 
       <div className="flex flex-col lg:flex-row gap-6 p-6 flex-grow">
-        <div className="w-full lg:w-1/2 h-[40vh] sm:h-[50vh] lg:h-[calc(100vh-140px)] rounded-2xl overflow-hidden bg-lightbrown">
-            <Canvas className="w-full h-full flex items-center" dpr={[1, 2]} gl={{ antialias: true, powerPreference: 'high-performance' }}>
-            <pointLight position={[0, 5, 0]} intensity={50} />
-            <spotLight position={[0, 5, 0]} angle={0.3} penumbra={0.4} />
-            <Environment preset="city" background={false} />
-
-            <group ref={groupRef} rotation={[0, Math.PI, 0]}>
-              <TopDecoration color={topDecorationColor} isVisible={isTopVisible} />
-              <Filing color={fillingColor} />
-              <Cot color={cotColor} />
-              <Base color={baseColor} />
-              <BottomDecoration color={bottomDecorationColor} isVisible={isBottomVisible} />
-              <Plate />
-            </group>
-
-            <OrthographicCamera position={[50, 20, 0]} />
-            <OrbitControls maxPolarAngle={Math.PI / 2.5} minDistance={3} maxDistance={3} />
-          </Canvas>
-        </div>
-
-  <CustomCakeMenu
+        {/* ❌ 3D Canvas Removed */}
+        <CustomCakeMenu
           stepData={steps[activeIndex]}
           activeIndex={activeIndex}
           totalSteps={steps.length}
@@ -99,7 +101,7 @@ const CustomCake = () => {
           onSelectOption={(opt) => handleSelectOption(activeIndex, opt)}
           onNext={next}
           onBack={back}
-          subtotal={subtotal}  
+          subtotal={subtotal}
         />
       </div>
     </div>
