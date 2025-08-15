@@ -1,7 +1,13 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
 import CustomCakeMenu from './CustomCakeMenu';
-// ❌ We removed Three.js imports since you said you only want data for Flutter
-
+import { Canvas } from '@react-three/fiber';
+import { Environment, OrbitControls, OrthographicCamera } from '@react-three/drei';
+import Filing from './Filling';
+import Cot from './Cot';
+import Plate from './Plate';
+import Base from './Base';
+import TopDecoration from './TopDecoration';
+import BottomDecoration from './BottomDecoration';
 const CustomCake = () => {
   // ----------------------------
   // 1. States for cake parts
@@ -92,7 +98,24 @@ const CustomCake = () => {
       </header>
 
       <div className="flex flex-col lg:flex-row gap-6 p-6 flex-grow">
-        {/* ❌ 3D Canvas Removed */}
+        <div className="w-full lg:w-1/2 h-[50vh] lg:h-[calc(100vh-140px)] rounded-2xl overflow-hidden"></div>
+        <Canvas className="w-full h-full flex items-center">
+            <pointLight position={[0, 5, 0]} intensity={50} />
+            <spotLight position={[0, 5, 0]} angle={0.3} penumbra={0.4} />
+            <Environment preset="city" background={false} />
+
+            <group ref={groupRef} rotation={[0, Math.PI, 0]}>
+              <TopDecoration color={topDecorationColor} isVisible={isTopVisible} />
+              <Filing color={fillingColor} />
+              <Cot color={cotColor} />
+              <Base color={baseColor} />
+              <BottomDecoration color={bottomDecorationColor} isVisible={isBottomVisible} />
+              <Plate />
+            </group>
+
+            <OrthographicCamera position={[50, 20, 0]} />
+            <OrbitControls maxPolarAngle={Math.PI / 2.5} minDistance={3} maxDistance={3} />
+          </Canvas>
         <CustomCakeMenu
           stepData={steps[activeIndex]}
           activeIndex={activeIndex}
