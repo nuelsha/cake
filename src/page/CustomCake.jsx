@@ -135,24 +135,25 @@ const CustomCake = () => {
 
       <div className="flex flex-col lg:flex-row gap-6 p-6 flex-grow">
         <div className="w-full lg:w-1/2 h-[50vh] lg:h-[calc(100vh-140px)] rounded-2xl overflow-hidden">
-          <Canvas className="w-full h-full">
-            <pointLight position={[0, 5, 0]} intensity={50} />
-            <spotLight position={[0, 5, 0]} angle={0.3} penumbra={0.4} />
-            <Environment preset="city" background={false} />
+  <Canvas className="w-full h-full">
+    <pointLight position={[0, 5, 0]} intensity={50} />
+    <spotLight position={[0, 5, 0]} angle={0.3} penumbra={0.4} />
+    <Environment preset="city" background={false} />
 
-            <group ref={groupRef} rotation={[0, Math.PI, 0]}>
-              <TopDecoration color={topDecorationColor} isVisible={isTopVisible} />
-              <Filing color={fillingColor} />
-              <Cot color={cotColor} />
-              <Base color={baseColor} />
-              <BottomDecoration color={bottomDecorationColor} isVisible={isBottomVisible} />
-              <Plate />
-            </group>
+    <group ref={groupRef} rotation={[0, Math.PI, 0]}>
+      <TopDecoration color={topDecorationColor} isVisible={isTopVisible} />
+      <Filing color={fillingColor} />
+      <Cot color={cotColor} />
+      <Base color={baseColor} />
+      <BottomDecoration color={bottomDecorationColor} isVisible={isBottomVisible} />
+      <Plate />
+    </group>
 
-            <OrthographicCamera position={[50, 20, 0]} />
-            <OrbitControls maxPolarAngle={Math.PI / 2.5} minDistance={4} maxDistance={3} />
-          </Canvas>
-        </div>
+    <OrthographicCamera position={[50, 20, 0]} />
+    <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2.5} />
+  </Canvas>
+</div>
+
 
         <div className="w-full lg:w-1/2">
           <CustomCakeMenu
