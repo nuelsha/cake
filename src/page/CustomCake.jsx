@@ -13,10 +13,17 @@ import BottomDecoration from "./BottomDecoration"
 
 const Loader = () => {
   const { progress } = useProgress()
+
   return (
     <Html center>
-      <div className="flex flex-col items-center justify-center text-yambrownfont">
-        <p className="text-lg font-semibold">Loading... {progress.toFixed(0)}%</p>
+      <div className="flex flex-col items-center justify-center gap-4 text-yambrownfont">
+        {/* Animated circle loader */}
+        <div className="w-12 h-12 border-4 border-yambrownfont border-t-transparent rounded-full animate-spin"></div>
+
+        {/* Loading text with progress */}
+        <p className="text-lg font-semibold animate-pulse">
+          Loading... {progress.toFixed(0)}%
+        </p>
       </div>
     </Html>
   )
@@ -124,9 +131,10 @@ const CustomCake = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="py-4">
-        <p className="text-yambrownfont text-xl font-semibold">Craft your dream cake now</p>
-      </header>
+  <header className="py-4 px-6 bg-lightbrown text-yambrownfont flex items-center justify-center">
+  <p className="text-yambrownfont text-xl font-semibold">Craft your dream cake now</p>
+</header>
+
 
       <div className="flex flex-col lg:flex-row gap-6 p-6 flex-grow">
         {/* LEFT: 3D Canvas */}
